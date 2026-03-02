@@ -146,6 +146,19 @@ function safeText(val) {
   return (val ?? "").toString().trim();
 }
 
+
+function safeHostname(urlStr){
+  const s = safeText(urlStr);
+  if (!s) return "—";
+  try{
+    // If missing protocol, assume https
+    const fixed = /^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(s) ? s : ("https://" + s.replace(/^\/+/, ""));
+    return new URL(fixed).hostname.replace(/^www\./,"www.");
+  }catch{
+    return s;
+  }
+}
+
 function buildPhoneDisplay(emp) {
   const base = safeText(emp.phone);
   const ext = safeText(emp.ext);
@@ -181,7 +194,7 @@ function renderEmployee(emp) {
   if (els.titleDesk) els.titleDesk.textContent = emp.title || "—";
   if (els.emailDesk) els.emailDesk.textContent = emp.email || "—";
   if (els.phoneDesk) els.phoneDesk.textContent = buildPhoneDisplay(emp);
-  if (els.webDesk) els.webDesk.textContent = emp.website ? new URL(emp.website).hostname : "—";
+  if (els.webDesk) els.webDesk.textContent = safeHostname(emp.website);
 
   // Desktop links
   setLink(els.emailLinkDesk, emp.email ? `mailto:${emp.email}` : "#");
@@ -197,7 +210,7 @@ function renderEmployee(emp) {
   if (els.titleMob) els.titleMob.textContent = emp.title || "—";
   if (els.emailMob) els.emailMob.textContent = emp.email || "—";
   if (els.phoneMob) els.phoneMob.textContent = buildPhoneDisplay(emp);
-  if (els.webMob) els.webMob.textContent = emp.website ? new URL(emp.website).hostname : "—";
+  if (els.webMob) els.webMob.textContent = safeHostname(emp.website);
 
   // Mobile links
   setLink(els.emailLinkMob, emp.email ? `mailto:${emp.email}` : "#");
