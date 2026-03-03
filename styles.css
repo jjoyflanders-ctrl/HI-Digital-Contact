@@ -25,7 +25,7 @@ a{color:inherit; text-decoration:none}
 .page{max-width:1200px; margin:0 auto; padding:18px 18px 64px;}
 
 /* ---------------- Desktop header (search) ---------------- */
-.desk-header{display:none; padding:18px 18px 0;}
+.desk-header{display:none; padding:18px 18px 0; padding-left: 54px; /* aligns search with circle */}
 .desk-topbar{display:flex; justify-content:flex-start;}
 .search-wrap{
   display:flex; align-items:center; gap:10px;
