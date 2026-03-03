@@ -135,7 +135,7 @@ function closeModal(dlg){
 
 /* CSV */
 async function loadEmployees(){
-  const res = await fetch("employees.csv", {cache:"no-store"});
+  const res = await fetch("/employees.csv", {cache:"no-store"});
   if (!res.ok) throw new Error("Could not load employees.csv");
   const text = await res.text();
   return parseCSV(text);
